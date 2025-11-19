@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Birthday</title>
+
+  <style>
+    /* Basic reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html,body { height: 100%; }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#001226 0%, #071428 50%, #0b2540 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(4px);
+      animation: card-in 600ms ease-out;
+    }
+
+    @keyframes card-in {
+      from { transform: translateY(18px) scale(.995); opacity: 0; }
+      to   { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    h1 {
+      color: #ffd6d6;
+      font-size: 28px;
+      margin-bottom: 10px;
+      letter-spacing: 0.4px;
+      text-shadow: 0 6px 30px rgba(255,70,70,0.06);
+    }
+
+    .subtitle {
+      color: #d7e9ff;
+      font-size: 15px;
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+
+    /* Editable message area */
+    .message {
+      background: rgba(255,255,255,0.02);
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.03);
+      text-align: left;
+      color: #f3f6ff;
+      font-size: 16px;
+      line-height: 1.5;
+      max-height: 210px;
+      overflow: auto;
+    }
+
+    .small-note {
+      font-size: 13px;
+      color: #a9c7ff;
+      margin-top: 14px;
+    }
+
+    /* Simple confetti shapes */
+    .confetti {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .confetti i {
+      position: absolute;
+      width: 8px;
+      height: 14px;
+      background: #ffb3b3;
+      opacity: .95;
+      transform-origin: center;
+      border-radius: 2px;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0%   { transform: translateY(-20vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      100% { transform: translateY(120vh) rotate(720deg); opacity: 1; }
+    }
+
+    /* small responsive tweaks */
+    @media (max-width:420px){
+      .card { padding: 18px; }
+      h1 { font-size: 22px; }
+      .message { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" role="main" aria-label="Birthday card">
+    <h1>Happy Birthday!</h1>
+    <div class="subtitle">A little message to make your day brighter.</div>
+
+    <!-- EDIT THIS MESSAGE: change the text between the <div id="message"> ... </div> tags -->
+    <div id="message" class="message" contenteditable="false" spellcheck="true">
+Happy Birthday! I hope your day is filled with laughter, love, and all the little things that make you happiest. May this year bring you exciting adventures, unforgettable memories, and endless reasons to smile. Celebrate yourself today—you deserve every bit of joy coming your way!
+    </div>
+
+    <div class="small-note">Tip: To edit this message before uploading, open <strong>index.html</strong> in a text editor and change the text inside the message box.</div>
+
+    <div class="confetti" id="confetti"></div>
+  </div>
+
+  <script>
+    /* Small script that generates confetti pieces (pure in-file JS) */
+    (function makeConfetti() {
+      const container = document.getElementById('confetti');
+      const colors = ['#ff9f9f','#ffd27a','#b9ffb8','#9fd4ff','#d8b3ff','#ffc2e6'];
+
+      // number of pieces
+      const N = 28;
+      for (let i=0;i<N;i++){
+        const el = document.createElement('i');
+        // random sizes and color
+        el.style.background = colors[Math.floor(Math.random()*colors.length)];
+        el.style.left = (Math.random()*100) + '%';
+        el.style.top = (-Math.random()*40) + 'vh';
+        el.style.width = (6 + Math.random()*8) + 'px';
+        el.style.height = (10 + Math.random()*14) + 'px';
+        el.style.opacity = (0.6 + Math.random()*0.6);
+        el.style.transform = 'rotate(' + (Math.random()*360) + 'deg)';
+        // random duration and delay
+        const dur = 4500 + Math.random()*4200;
+        const delay = Math.random()*1200;
+        el.style.animationDuration = dur + 'ms';
+        el.style.animationDelay = delay + 'ms';
+        container.appendChild(el);
+      }
+    })();
+  </script>
+
+</body>
+</html>
